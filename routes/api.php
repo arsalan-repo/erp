@@ -26,4 +26,7 @@ Route::get('/all_sub_category', 'ApiController@subCategory');
 Route::post('/client_login', 'ApiController@client_authentication');
 Route::group(['middleware' => ['client']], function () {
     Route::get('/all_products', 'ApiController@product');
+    Route::post('/order', 'ApiController@order');
+    Route::post('/get_order', 'ApiController@get_orders');
+    Route::post('/get_all_orders', 'ApiController@get_all_orders');
 });

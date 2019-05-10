@@ -61,13 +61,21 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password</label>
-                                                <input type="text" class="form-control" name="password">
+                                                <input type="password" class="form-control" name="password">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="col-form-label">Country</label>
-                                                <input type="text" class="form-control" name="country">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Region</label>
+                                                    <select class="form-control" name="region">
+                                                        <option value="sindh">Sindh</option>
+                                                        <option value="punjab">Punjab</option>
+                                                        <option value="kpk">KPK</option>
+                                                        <option value="balochistan">Balochistan</option>
+                                                        <option value="gilgit_baltistan">Gilgit Baltistan</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

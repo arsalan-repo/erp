@@ -28,7 +28,7 @@ class UsersController extends Controller
             'phone' => 'required|max:15',
             'email' => 'required|max:255',
             'password' => 'required|max:255',
-            'country' => 'required|max:255',
+            'region' => 'required|max:255',
             'city' => 'required|max:255',
             'role' => 'required|max:255',
             'address' => 'required|max:1000',
@@ -48,7 +48,7 @@ class UsersController extends Controller
             $user_meta = new UserMeta();
             $data = [
                 ['user_id' => $user->id, 'key' => 'phone', 'value' => $request->input('phone')],
-                ['user_id' => $user->id, 'key' => 'country', 'value' => $request->input('country')],
+                ['user_id' => $user->id, 'key' => 'region', 'value' => $request->input('region')],
                 ['user_id' => $user->id, 'key' => 'city', 'value' => $request->input('city')],
                 ['user_id' => $user->id, 'key' => 'address', 'value' => $request->input('address')],
                 ['user_id' => $user->id, 'key' => 'additional_info', 'value' => $request->input('additional_info')],
@@ -82,7 +82,7 @@ class UsersController extends Controller
             'phone' => 'required|max:15',
             'email' => 'required|max:255',
             'password' => 'required|max:255',
-            'country' => 'required|max:255',
+            'region' => 'required|max:255',
             'city' => 'required|max:255',
             'role' => 'required|max:255',
             'address' => 'required|max:1000',
@@ -103,7 +103,7 @@ class UsersController extends Controller
 
             $data = [
                 ['user_id' => $user->id, 'key' => 'phone', 'value' => $request->input('phone')],
-                ['user_id' => $user->id, 'key' => 'country', 'value' => $request->input('country')],
+                ['user_id' => $user->id, 'key' => 'region', 'value' => $request->input('region')],
                 ['user_id' => $user->id, 'key' => 'city', 'value' => $request->input('city')],
                 ['user_id' => $user->id, 'key' => 'address', 'value' => $request->input('address')],
                 ['user_id' => $user->id, 'key' => 'additional_info', 'value' => $request->input('additional_info')],

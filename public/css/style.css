@@ -19,3 +19,8 @@
     border: none;
     cursor: pointer;
 }
+
+ul.multiselect-container.dropdown-menu {
+    padding: 10px;
+    width: 100%;
+}

@@ -50,7 +50,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Category</label>
-                                                <select class="form-control" name="category_id">
+                                                <select class="form-control" name="category_id" >
                                                     @foreach($categories as $category)
                                                         <option value="{{ $category->id }}" <?= ($category->id == $product->category->id) ? 'selected' : '' ?>>{{ $category->name }}</option>
                                                     @endforeach

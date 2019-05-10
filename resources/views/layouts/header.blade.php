@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ url('assets/vendor/fonts/flag-icon-css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ url('css/multiselect/bootstrap-multiselect.css') }}" type="text/css"/>
     <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
 </head>
 

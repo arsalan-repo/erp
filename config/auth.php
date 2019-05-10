@@ -43,8 +43,7 @@ return [
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'clients',
-            'hash' => false,
+            'provider' => 'clients'
         ],
     ],
 
@@ -73,7 +72,7 @@ return [
 
         'clients' => [
             'driver' => 'eloquent',
-            'model' => \App\Client::class,
+            'model' => App\Client::class,
         ],
     ],
 

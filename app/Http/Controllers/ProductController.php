@@ -6,29 +6,35 @@ use App\Category;
 use App\Color;
 use App\ItemType;
 use App\Product;
+use App\ProductCategory;
+use App\ProductColors;
+use App\ProductTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::with(['category', 'color', 'sub_category'])->get();
+    public function index()
+    {
+        $products = Product::with(['categories', 'types'])->get();
         return view('products.products', ['products' => $products]);
     }
 
-    public function add(){
+    public function add()
+    {
         $category = Category::all();
         $sub_category = ItemType::all();
         $code = Color::all();
         return view('products.add_product', ['categories' => $category, 'sub_categories' => $sub_category, 'codes' => $code]);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'category_id' => 'required|max:255',
-            'sub_category_id' => 'required|max:255',
-            'code_id' => 'required|max:255',
+            'type_id' => 'required|max:255',
+            'color_id' => 'required|max:255',
             'qty' => 'required|max:255',
             'unit' => 'required|max:255',
             'image' => 'required|max:255',
@@ -36,26 +42,51 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('product.create')->withErrors($validator)->withInput();
+            return redirect()->route('product.add')->withErrors($validator)->withInput();
         }
 
         $products = new Product();
 
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
         $products->name = $request->input('name');
-        $products->category_id = $request->input('category_id');
-        $products->sub_category_id = $request->input('sub_category_id');
-        $products->code_id = $request->input('code_id');
         $products->qty = $request->input('qty');
         $products->unit = $request->input('unit');
         $products->image = $imageName;
         $products->description = $request->input('description');
 
-        if($products->save()){
+        if ($products->save()) {
+            $product_id = $products->id;
+            $categories = $request->input('category_id');
+            foreach ($categories as $cat) {
+                $product_categories = new ProductCategory();
+                $product_categories->product_id = $product_id;
+                $product_categories->category_id = $cat;
+
+                $product_categories->save();
+            }
+
+            $types = $request->input('type_id');
+            foreach ($types as $type){
+                $product_types = new ProductTypes();
+                $product_types->product_id = $product_id;
+                $product_types->type_id = $type;
+
+                $product_types->save();
+            }
+
+            $colors = $request->input('color_id');
+            foreach ($colors as $color){
+                $product_colors = new ProductColors();
+                $product_colors->product_id = $product_id;
+                $product_colors->color_id = $color;
+
+                $product_colors->save();
+            }
+
             return redirect()->route('products.list');
-        }else{
+        } else {
             $error = [
                 'error' => 'An error occurred while saving!',
             ];
@@ -63,13 +94,15 @@ class ProductController extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $product = Product::findorfail($id);
         $product->delete();
         return redirect()->route('products.list');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $product = Product::findorfail($id);
         $category = Category::all();
         $sub_category = ItemType::all();
@@ -77,11 +110,12 @@ class ProductController extends Controller
         return view('products.edit_product', ['product' => $product, 'categories' => $category, 'sub_categories' => $sub_category, 'codes' => $code]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'category_id' => 'required|max:255',
-            'sub_category_id' => 'required|max:255',
+            'type_id' => 'required|max:255',
             'code_id' => 'required|max:255',
             'qty' => 'required|max:255',
             'unit' => 'required|max:255',
@@ -95,21 +129,21 @@ class ProductController extends Controller
 
         $product = Product::findorfail($id);
 
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
         $product->name = $request->input('name');
-        $product->category_id = $request->input('category_id');
-        $product->sub_category_id = $request->input('sub_category_id');
-        $product->code_id = $request->input('code_id');
+//        $product->category_id = $request->input('category_id');
+//        $product->type_id = $request->input('type_id');
+//        $product->code_id = $request->input('code_id');
         $product->qty = $request->input('qty');
         $product->unit = $request->input('unit');
         $product->description = $request->input('description');
         $product->image = $imageName;
 
-        if($product->save()){
+        if ($product->save()) {
             return redirect()->route('products.list');
-        }else{
+        } else {
             $error = [
                 'error' => 'An error occurred while saving!',
             ];

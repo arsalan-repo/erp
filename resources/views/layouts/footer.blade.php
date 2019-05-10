@@ -18,6 +18,8 @@
 <script src="{{ url('assets/vendor/slimscroll/jquery.slimscroll.js') }}"></script>
 <!-- main js -->
 <script src="{{ url('assets/libs/js/main-js.js') }}"></script>
+{{--Multiselect--}}
+<script src="{{ url('css/multiselect/bootstrap-multiselect.js') }}"></script>
 <!-- chart chartist js -->
 {{--<script src="assets/vendor/charts/chartist-bundle/chartist.min.js"></script>--}}
 <!-- sparkline js -->
@@ -41,6 +43,13 @@
         $('#products').DataTable();
         $('#clients').DataTable();
     } );
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#category').multiselect();
+        $('#sub_category').multiselect();
+        $('#color_code').multiselect();
+    });
 </script>
 </body>
 

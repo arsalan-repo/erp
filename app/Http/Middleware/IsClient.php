@@ -22,6 +22,7 @@ class IsClient
         if (!empty($authorization) && $exists) {
             return $next($request);
         }
+
         return response()->json([
             'status' => false,
             'message' => 'Authorization failed'

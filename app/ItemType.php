@@ -9,7 +9,8 @@ class ItemType extends Model
     public $timestamps = false;
     protected $table = "types";
 
-    public function product(){
-        return $this->hasMany('App\Product', 'sub_category_id', 'id');
+    public function products()
+    {
+        return $this->hasMany('App\ProductTypes', 'type_id');
     }
 }

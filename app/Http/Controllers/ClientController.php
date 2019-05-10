@@ -50,7 +50,7 @@ class ClientController extends Controller
         $client->name = $request->input('name');
         $client->email = $request->input('email');
         $password = $request->input('password');
-        $client->password = $password;
+        $client->password = md5($password);
         $client->phone = $request->input('phone');
         $client->whatsapp_number = $request->input('whatsapp_number');
         $client->distributor_id = $request->input('distributor_id');
@@ -110,7 +110,7 @@ class ClientController extends Controller
 
         $client->name = $request->input('name');
         $password = $request->input('password');
-        $client->password = $password;
+        $client->password = md5($password);
         $client->email = $request->input('email');
         $client->phone = $request->input('phone');
         $client->whatsapp_number = $request->input('whatsapp_number');

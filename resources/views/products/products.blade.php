@@ -35,6 +35,7 @@
                                         <th>S#</th>
                                         <th>Name</th>
                                         <th>Category</th>
+                                        <th>Sub Category</th>
                                         <th>Color</th>
                                         <th>Quantity</th>
                                         <th>Unit</th>
@@ -45,30 +46,34 @@
                                     <tbody>
                                     <?php $i = 0; ?>
                                     @foreach($products as $product)
-                                    <?php $i++ ?>
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->color->name }}</td>
-                                        <td>{{ $product->qty }}</td>
-                                        <td>{{ $product->unit }}</td>
-                                        <td>
-                                            <img src="/erp/public/images/{{ $product->image }}" class="img-responsive" width="100" height="100"/>
-                                        </td>
-                                        <td>
-                                            <ul class="actions">
-                                                <li><a href="{{ route('product.edit', ['id' => $product->id]) }}"><span><i class="fa fa-edit"></i></span></a></li>
-                                                <li>
-                                                    <form id="delete-category" method="post" action="{{ route('product.delete', ['id' => $product->id]) }}">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <button type="submit"><span><i class="fa fa-trash"></i></span></button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                        <?php $i++ ?>
+                                        <tr>
+                                            <td>{{ $i }}</td>
+                                            <td>{{ $product->name }}</td>
+                                            <td>{{ $product->category_names }}</td>
+                                            <td>{{ $product->type_names }}</td>
+                                            <td>{{ $product->color_names }}</td>
+                                            <td>{{ $product->qty }}</td>
+                                            <td>{{ $product->unit }}</td>
+                                            <td>
+                                                <img src="/erp/public/images/{{ $product->image }}"
+                                                     class="img-responsive" width="100" height="100"/>
+                                            </td>
+                                            <td>
+                                                <ul class="actions">
+                                                    <li>
+                                                        <a href="{{ route('product.edit', ['id' => $product->id]) }}"><span><i
+                                                                        class="fa fa-edit"></i></span></a></li>
+                                                    <li>
+                                                        <form id="delete-category" method="post" action="{{ route('product.delete', ['id' => $product->id]) }}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <button type="submit"><span><i class="fa fa-trash"></i></span></button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>

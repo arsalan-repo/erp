@@ -9,7 +9,8 @@ class Client extends Model
     public $table = 'clients';
     public $timestamps = false;
 
-    public function distributor(){
+    public function distributor()
+    {
         return $this->belongsTo('App\User', 'distributor_id', 'id');
     }
 

@@ -50,7 +50,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Category</label>
-                                                <select class="form-control" name="category_id">
+                                                <br/>
+                                                <select class="form-control" id="category" multiple="multiple" name="category_id[]">
                                                     @foreach($categories as $category)
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
@@ -60,7 +61,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Item Type/Subcategory</label>
-                                                <select class="form-control" name="sub_category_id">
+                                                <br/>
+                                                <select class="form-control" name="type_id[]" multiple="multiple" id="sub_category">
                                                     @foreach($sub_categories as $sub_category)
                                                         <option value="{{ $sub_category->id }}">{{ $sub_category->name }}</option>
                                                     @endforeach
@@ -70,7 +72,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Color/Code</label>
-                                                <select class="form-control" name="code_id">
+                                                <br/>
+                                                <select class="form-control" name="color_id[]" multiple="multiple" id="color_code">
                                                     @foreach($codes as $code)
                                                         <option value="{{ $code->id }}">{{ $code->name }}</option>
                                                     @endforeach
@@ -102,6 +105,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-primary" value="Create Product">

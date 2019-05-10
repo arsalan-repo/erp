@@ -72,7 +72,7 @@ Route::group(['middleware' => ['role:admin|distributor']], function () {
     //Products
     Route::get('/product/add', 'ProductController@add')->name('product.add');
     Route::post('/product/create', 'ProductController@create')->name('product.create');
-    Route::delete('/product/delete', 'ProductController@delete')->name('product.delete');
+    Route::delete('/product/{id}/delete', 'ProductController@delete')->name('product.delete');
     Route::get('/product/{id}/edit', 'ProductController@edit')->name('product.edit');
     Route::put('/product/{id}/update', 'ProductController@update')->name('product.update');
 
