@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/client/login';
 
     /**
      * Create a new controller instance.
@@ -40,7 +40,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        dd($request);
+//        dd($request);
         $field = 'email';
 
         $request->merge([$field => $request->input('email')]);
@@ -77,4 +77,5 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
 }

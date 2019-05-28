@@ -22,6 +22,8 @@
                         </div>
                     </div>
                 </div>
+                <form action="{{ route('order.edit',['id' => $order->id]) }}" method="POST">
+                    @csrf
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="section-block" id="basicform">
@@ -54,6 +56,18 @@
                                     <div class="form-group">
                                         <label class="col-form-label">Shipping Address</label>
                                         <p>{{$shipping->value}}</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Order Status</label>
+                                        <select name="status">
+                                            <option value="Processing" @if ($order->status == 'processing') selected @endif>Processing</option>
+                                            <option value="Partial Approved" @if ($order->status == 'Partial Approved') selected @endif>Partial Approved</option>
+                                            <option value="approved" @if ($order->status == 'approved') selected @endif>Approved</option>
+                                            <option value="compeleted" @if ($order->status == 'compeleted') selected @endif>Completed</option>
+                                            <option value="declined" @if ($order->status == 'declined') selected @endif>Declined</option>
+
+                                        </select>
+                                        <input type="hidden" name="order_id" value="{{$order->id}}">
                                     </div>
 
                                     <div class="table-responsive cart_info">
@@ -95,11 +109,17 @@
                                             </tbody>
                                         </table>
                                     </div>
-
+                                    <input type = "hidden" name = "_method" value = "PUT">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary" value="Edit Status">
+                                    </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

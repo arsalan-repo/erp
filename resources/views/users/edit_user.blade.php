@@ -385,6 +385,7 @@
                                                     <option <?= ($u->role_name == 'admin') ? 'selected' : ''?> value="admin">Admin</option>
                                                     <option <?= ($u->role_name == 'distributor') ? 'selected' : ''?> value="distributor">Distributor</option>
                                                     <option <?= ($u->role_name == 'warehouse_manager') ? 'selected' : ''?> value="warehouse_manager">Warehouse Manager</option>
+                                                    <option <?= ($u->role_name == 'client') ? 'selected' : ''?> value="client">Client</option>
                                                 </select>
                                             </div>
                                         </div>

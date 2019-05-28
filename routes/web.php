@@ -25,6 +25,7 @@ Route::get('/', 'Auth\LoginController@login');
 
 Route::group(['middleware' => ['auth']], function () {
 //    Route::get('/home', 'MainController@home');
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 });
 
@@ -33,7 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['role:admin']], function () {
 
     Route::get('/home', 'MainController@home')->name('dashboard');
-    Route::get('/order/list','OrderController@get_all_orders')->name('order.list');
+
     //Privileges
     Route::get('/privileges', 'PrivilegesController@createPrivileges');
     Route::get('/assign_privileges', 'PrivilegesController@assignPrivileges');
@@ -116,4 +117,7 @@ Route::group(['middleware' => ['role:warehouse_manager|distributor|admin']], fun
 
     //Products
     Route::get('/products', 'ProductController@index')->name('products.list');
+
+    Route::get('/order/list','OrderController@get_all_orders')->name('order.list');
+    Route::put('/order/edit/{id}','OrderController@update')->name('order.edit');
 });
