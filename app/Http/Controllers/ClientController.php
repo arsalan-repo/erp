@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\User;
+use App\Product;
+use App\ItemType;
+use App\color;
+use App\category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -13,8 +17,35 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::with('distributor')->get();
-        return view('clients.clients', ['clients' => $clients]);
+
+        $products = Product::all();
+//         dd($products);
+        return view('frontend.products.product')->with('products',$products);
+
+    }
+    public function productdetails($id)
+    {
+
+        $product = Product::findorfail($id);
+        $product['categories'] = Product::findorfail($id)->categories;
+        foreach ($product['categories'] as $key => $value) {
+            $category_name = Category::find($value->category_id)->name; 
+            $value['category_name'] = $category_name;
+        }
+        $product['types'] = Product::findorfail($id)->types;
+        foreach ($product['types'] as $key => $value) {
+            $category_name = ItemType::find($value->type_id)->name; 
+            $value['type_name'] = $category_name;
+        }
+        $product['colors'] = Product::findorfail($id)->colors;
+        foreach ($product['colors'] as $key => $value) {
+            $category_name = color::find($value->color_id); 
+            $value['color_name'] = $category_name->name;
+            $value['color_image'] = $category_name->image;
+        }
+        // dd($product);
+        return view('frontend.products.product_detail')->with('product',$product);
+
     }
 
     public function add()
@@ -128,6 +159,9 @@ class ClientController extends Controller
             ];
             return redirect()->route('client.edit', [$id])->withErrors($error)->withInput();
         }
+    }
+    public function show_client_login(){
+        return view('clients.login');
     }
 
 }

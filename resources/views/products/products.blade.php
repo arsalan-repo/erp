@@ -34,9 +34,6 @@
                                     <tr>
                                         <th>S#</th>
                                         <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
-                                        <th>Color</th>
                                         <th>Quantity</th>
                                         <th>Unit</th>
                                         <th>Image</th>
@@ -50,13 +47,11 @@
                                         <tr>
                                             <td>{{ $i }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td>{{ $product->category_names }}</td>
-                                            <td>{{ $product->type_names }}</td>
-                                            <td>{{ $product->color_names }}</td>
+                                            
                                             <td>{{ $product->qty }}</td>
                                             <td>{{ $product->unit }}</td>
                                             <td>
-                                                <img src="/erp/public/images/{{ $product->image }}"
+                                                <img src="{{ asset('storage/'. $product->image) }}"
                                                      class="img-responsive" width="100" height="100"/>
                                             </td>
                                             <td>

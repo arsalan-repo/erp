@@ -17,11 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/client/login','ClientController@show_client_login');
+// Route::post('/client/login','ClientController@client_login');
+
 //Authentication
 Route::get('/', 'Auth\LoginController@login');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'MainController@home');
+    Route::get('/order/list','OrderController@get_all_orders')->name('order.list');
 });
 Route::get('/home', 'MainController@home')->name('dashboard');
 
@@ -31,6 +35,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     //Privileges
     Route::get('/privileges', 'PrivilegesController@createPrivileges');
     Route::get('/assign_privileges', 'PrivilegesController@assignPrivileges');
+    Route::get('/order/list','OrderController@get_all_orders')->name('order.list');
 });
 
 //Admin & Distributor
@@ -39,6 +44,8 @@ Route::group(['middleware' => ['role:admin|distributor']], function () {
     //Account
     Route::get('/account', 'AccountController@index')->name('account');
     Route::put('/account/{id}/update', 'AccountController@update')->name('account.update');
+    Route::get('/order/list','OrderController@get_all_orders')->name('order.list');
+    Route::get('/order/detail/{id}','OrderController@get_order')->name('order.detail');
 
     //User
     Route::get('/users', 'UsersController@index')->name('users.list');
@@ -75,10 +82,14 @@ Route::group(['middleware' => ['role:admin|distributor']], function () {
     Route::delete('/product/{id}/delete', 'ProductController@delete')->name('product.delete');
     Route::get('/product/{id}/edit', 'ProductController@edit')->name('product.edit');
     Route::put('/product/{id}/update', 'ProductController@update')->name('product.update');
-
+});
+Route::group(['middleware' => ['role:client']], function () {
     //Clients
-    Route::get('/clients', 'ClientController@index')->name('clients.list');
-    Route::get('/client/add', 'ClientController@add')->name('client.add');
+    Route::get('/clients', 'ClientController@index')->name('clients');
+    Route::get('/client/product/{id}', 'ClientController@productdetails')->name('productdetails');
+    Route::post('/order/add','OrderController@add')->name('order.add');
+    Route::post('/order/create','OrderController@create')->name('order.create');
+
     Route::post('/client/create', 'ClientController@create')->name('client.create');
     Route::delete('/client/{id}/delete', 'ClientController@delete')->name('client.delete');
     Route::get('/client/{id}/edit', 'ClientController@edit')->name('client.edit');

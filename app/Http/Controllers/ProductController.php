@@ -11,12 +11,14 @@ use App\ProductColors;
 use App\ProductTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with(['categories', 'types'])->get();
+        $products = Product::all();
+//         dd($products);
         return view('products.products', ['products' => $products]);
     }
 
@@ -47,16 +49,23 @@ class ProductController extends Controller
 
         $products = new Product();
 
-        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
+        $file = $request->file('image');
+        $newfile = Storage::put('public/product', $file);
+        // dd($newfile);
+
+        $newfile = (explode("/",$newfile));
+        $filename = $newfile[1].'/'.$newfile[2];
+        // $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+        // request()->image->move(public_path('images'), $imageName);
 
         $products->name = $request->input('name');
         $products->qty = $request->input('qty');
         $products->unit = $request->input('unit');
-        $products->image = $imageName;
+        $products->image = $filename;
         $products->description = $request->input('description');
-
+        $products->save();
         if ($products->save()) {
+            // dd($products);
             $product_id = $products->id;
             $categories = $request->input('category_id');
             foreach ($categories as $cat) {
@@ -104,9 +113,32 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findorfail($id);
+        $product_categories = Product::findorfail($id)->categories;
+        $product_type = Product::findorfail($id)->types;
+        $product_color = Product::findorfail($id)->colors;
+        $categories = array();
+        $types = array();
+        $colors = array();
+        
+        foreach ($product_categories as $key => $category) {
+           $categories[$key] =  $category->category_id;
+        }        
+        foreach ($product_type as $type)
+        {
+            $types[$key] = $type->type_id;
+        }
+        foreach ($product_color as $color)
+        {
+            $colors[$key] = $color->color_id;
+        }
+        $product['categories'] = $categories;
+        $product['types'] = $types;
+        $product['colors'] = $colors;
+        // dd($product);
         $category = Category::all();
         $sub_category = ItemType::all();
         $code = Color::all();
+        // dd($product);
         return view('products.edit_product', ['product' => $product, 'categories' => $category, 'sub_categories' => $sub_category, 'codes' => $code]);
     }
 
@@ -129,8 +161,14 @@ class ProductController extends Controller
 
         $product = Product::findorfail($id);
 
-        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
+        $file = $request->file('image');
+        $newfile = Storage::put('public/product', $file);
+        // dd($newfile);
+
+        $newfile = (explode("/",$newfile));
+        $filename = $newfile[1].'/'.$newfile[2];
+        // $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+        // request()->image->move(public_path('images'), $imageName);
 
         $product->name = $request->input('name');
 //        $product->category_id = $request->input('category_id');
@@ -139,9 +177,40 @@ class ProductController extends Controller
         $product->qty = $request->input('qty');
         $product->unit = $request->input('unit');
         $product->description = $request->input('description');
-        $product->image = $imageName;
+        $product->image = $filename;
 
         if ($product->save()) {
+            ProductCategory::where('product_id', $product->$id)->delete();
+            $product_id = $products->id;
+            $categories = $request->input('category_id');
+            foreach ($categories as $cat) {
+                $product_categories = new ProductCategory();
+                $product_categories->product_id = $product_id;
+                $product_categories->category_id = $cat;
+
+                $product_categories->save();
+            }
+
+            $types = $request->input('type_id');
+            ProductTypes::where('product_id', $product->$id)->delete();
+            foreach ($types as $type){
+                $product_types = new ProductTypes();
+                $product_types->product_id = $product_id;
+                $product_types->type_id = $type;
+
+                $product_types->save();
+            }
+
+            $colors = $request->input('color_id');
+            ProductColors::where('product_id', $product->$id)->delete();
+            // ProductColors
+            foreach ($colors as $color){
+                $product_colors = new ProductColors();
+                $product_colors->product_id = $product_id;
+                $product_colors->color_id = $color;
+
+                $product_colors->save();
+            }
             return redirect()->route('products.list');
         } else {
             $error = [

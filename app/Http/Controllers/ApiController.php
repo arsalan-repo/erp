@@ -63,13 +63,14 @@ class ApiController extends Controller
             $data = [
                 ['order_id' => $order->id, 'key' => 'product_id', 'value' => $request->input('product_id')],
                 ['order_id' => $order->id, 'key' => 'qty', 'value' => $request->input('qty')],
+                ['order_id' => $order->id, 'key' => 'color', 'value' => $request->input('color')],
                 ['order_id' => $order->id, 'key' => 'shipping', 'value' => $request->input('shipping')],
                 ['order_id' => $order->id, 'key' => 'billing', 'value' => $request->input('billing')],
                 ['order_id' => $order->id, 'key' => 'additional_notes', 'value' => $request->input('additional_notes')],
             ];
 
             if (OrderMeta::insert($data)) {
-                return response()->json(['success' => true]);
+
             } else {
                 return response()->json(['success' => false, 'error' => 'An error occurred']);
             }

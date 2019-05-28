@@ -15,10 +15,12 @@ class Orders extends Migration
     {
         Schema::create('orders', function (Blueprint $table){
             $table->increments('id');
-            $table->unsignedInteger('client_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('status')->default('processing');
             $table->timestamps();
-            $table->foreign( 'client_id' )->references( 'id' )->on( 'clients' )->onDelete( 'cascade' );
+      //       $table->foreign('user_id')
+      // ->references('id')->on('users')
+      // ->onDelete('cascade');
         });
     }
 
@@ -30,5 +32,6 @@ class Orders extends Migration
     public function down()
     {
         Schema::drop('orders');
+        $table->dropForeign(['user_id']);
     }
 }

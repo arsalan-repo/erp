@@ -51,8 +51,9 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Category</label>
                                                 <select class="form-control" name="category_id" >
+                                                    
                                                     @foreach($categories as $category)
-                                                        <option value="{{ $category->id }}" <?= ($category->id == $product->category->id) ? 'selected' : '' ?>>{{ $category->name }}</option>
+                                                        <option value="{{ $category->id }}" <?php if (in_array($category->id, $product->categories)) { echo "selected"; } ?>>{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -60,9 +61,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Select Item Type/Subcategory</label>
-                                                <select class="form-control" name="sub_category_id">
+                                                <select class="form-control" name="type_id">
                                                     @foreach($sub_categories as $sub_category)
-                                                        <option value="{{ $sub_category->id }}" <?= ($sub_category->id == $product->sub_category->id) ? 'selected' : '' ?>>{{ $sub_category->name }}</option>
+                                                        <option value="{{ $sub_category->id }}" <?php if (in_array($category->id, $product->types)){ echo 'selected'; } ?>>{{ $sub_category->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -72,7 +73,7 @@
                                                 <label class="col-form-label">Select Color/Code</label>
                                                 <select class="form-control" name="code_id">
                                                     @foreach($codes as $code)
-                                                        <option value="{{ $code->id }}" <?= ($code->id == $product->color->id) ? 'selected' : '' ?>>{{ $code->name }}</option>
+                                                        <option value="{{ $code->id }}" <?php if (in_array($code->id , $product->colors)){ echo 'selected'; } ?>>{{ $code->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

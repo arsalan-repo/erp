@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Login</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/libs/css/style.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link href="{{ asset('assets/vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/libs/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
     <style>
         html,
         body {
@@ -24,6 +24,14 @@
             padding-top: 40px;
             padding-bottom: 40px;
         }
+        .admin-login {font-size:0; /* Fixes inline block spacing */  }
+        .admin-login div {
+            width: 100%;
+        }
+.admin-login span { width:50%; display:inline-block; }
+.admin-login span.align-right { text-align:right; }
+
+.admin-login span a { font-size:14px; }
     </style>
 </head>
 <body>
@@ -67,9 +75,14 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
             </form>
         </div>
-        <div class="card-footer bg-white p-0  ">
-            <div class="card-footer-item card-footer-item-bordered">
-                <a href="#" class="footer-link">Forgot Password</a>
+        <div class="card-footer bg-white p-0 admin-login">
+            <div class="card-footer-item card-footer-item-bordered ">
+                <span>
+                    <a href="#" class="footer-link">Forgot Password</a>
+                </span>
+                <span>
+                    <a href="{{ url('/client/login') }}" class="footer-link align-right">Login As Client</a>
+                </span>
             </div>
         </div>
     </div>

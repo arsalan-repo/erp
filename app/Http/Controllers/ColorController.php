@@ -6,6 +6,7 @@ use App\Color;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ColorController extends Controller
 {
@@ -29,13 +30,17 @@ class ColorController extends Controller
             return redirect('color/add')->withErrors($validator)->withInput();
         }
 
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
-
+        $file = $request->file('image');
+        $newfile = Storage::put('public/color', $file);
+        // dd($newfile);
+        $newfile = (explode("/",$newfile));
+        $filename = $newfile[1].'/'.$newfile[2];
+        // $newfile = $file->move(public_path().'\color'.$request->input('name').'.jpg');
+        // dd($filename);
         $color = new Color();
         $color->name = $request->input('name');
         $color->code = $request->input('code');
-        $color->image = $imageName;
+        $color->image = $filename;
         if($color->save()){
             return redirect('colors');
         }else{

@@ -51,7 +51,7 @@
                                             <td>{{ $color->name }}</td>
                                             <td>{{ $color->code }}</td>
                                             <td>
-                                                <img src="/erp/public/images/{{ $color->image }}" class="img-responsive" width="100" height="100"/>
+                                                <img src="{{ asset('storage/'.$color->image) }}" class="img-responsive" width="100" height="100"/>
                                             </td>
                                             <td>
                                                 <ul class="actions">

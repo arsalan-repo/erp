@@ -9,15 +9,15 @@ class Product extends Model
     protected $table = "products";
     public $timestamps = false;
 
-    protected $appends = [
-        'category_names',
-        'type_names',
-        'color_names'
-    ];
+    // protected $appends = [
+    //     'category_names',
+    //     'type_names',
+    //     'color_names'
+    // ];
 
     public function categories()
     {
-        return $this->hasMany('App\ProductCategory', 'product_id');
+        return $this->hasMany('App\ProductCategory');
     }
 
     public function getCategoryNamesAttribute()
@@ -31,7 +31,7 @@ class Product extends Model
 
     public function types()
     {
-        return $this->hasMany('App\ProductTypes', 'product_id');
+        return $this->hasMany('App\ProductTypes');
     }
 
     public function getTypeNamesAttribute()
@@ -45,7 +45,7 @@ class Product extends Model
 
     public function colors()
     {
-        return $this->hasMany('App\ProductColors', 'product_id');
+        return $this->hasMany('App\ProductColors');
     }
 
     public function getColorNamesAttribute()

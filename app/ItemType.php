@@ -11,6 +11,6 @@ class ItemType extends Model
 
     public function products()
     {
-        return $this->hasMany('App\ProductTypes', 'type_id');
+        return $this->hasMany('App\ProductTypes');
     }
 }

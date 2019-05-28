@@ -392,6 +392,7 @@
                                                     <option value="admin">Admin</option>
                                                     <option value="distributor">Distributor</option>
                                                     <option value="warehouse_manager">Warehouse Manager</option>
+                                                    <option value="client">client</option>
                                                 </select>
                                             </div>
                                         </div>

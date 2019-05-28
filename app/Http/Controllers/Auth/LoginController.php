@@ -45,8 +45,14 @@ class LoginController extends Controller
         $request->merge([$field => $request->input('email')]);
 
         if (Auth::attempt($request->only($field, 'password'), ($request->input('remember') == 1))) {
-            return redirect('/');
-        }
+            $user = Auth::user();
+            if($user->hasRole('client'))
+            {
+                return redirect('/clients');
+            }else{
+                return redirect('/');
+            }
+        }   
 
         return $this->sendFailedLoginResponse($request);
     }
