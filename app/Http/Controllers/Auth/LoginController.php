@@ -40,6 +40,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        dd($request);
         $field = 'email';
 
         $request->merge([$field => $request->input('email')]);
